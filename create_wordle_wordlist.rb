@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'set'
 
 # Usage: ./create_wordle_wordlist.rb words_alpha.txt > words_wordle.txt
 #
@@ -41,6 +42,8 @@ LETTER_FREQ = {
   z: 0.44
 }.freeze
 
+EXCLUDE = Set.new(['contd'])
+
 freq_scores = words.map do |w|
   score = w.chars.map { |c| LETTER_FREQ[c.to_sym] }.sum
   [w, score]
@@ -48,6 +51,8 @@ end
 
 sorted = freq_scores.sort_by { |w, s| s }.reverse
 
-sorted.each do |w, s|
+sorted.select { |w, _|
+  !EXCLUDE.include?(w)
+}.each do |w, s|
   puts w
 end
