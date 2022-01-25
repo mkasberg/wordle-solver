@@ -6,7 +6,6 @@ class WordleSolver
     end
 
     @possibilities = sorted_words
-    @guesses = []
     @yellow_letters = Set.new
     @guesses = []
   end
